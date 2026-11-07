@@ -259,39 +259,46 @@ with tab2:
         display_img = img_rgb
         hist_data = img_rgb
         hist_color = "black"
+        chart_title = "Original RGB"
     elif view_mode == "RGB - R 通道 (Red)":
         r_ch = img_rgb[:, :, 0]
         display_img = np.stack([r_ch, zeros, zeros], axis=-1) if rgb_tint else r_ch
         hist_data = r_ch
         hist_color = "#e74c3c"
+        chart_title = "RGB - Red Channel (R)"
     elif view_mode == "RGB - G 通道 (Green)":
         g_ch = img_rgb[:, :, 1]
         display_img = np.stack([zeros, g_ch, zeros], axis=-1) if rgb_tint else g_ch
         hist_data = g_ch
         hist_color = "#2ecc71"
+        chart_title = "RGB - Green Channel (G)"
     elif view_mode == "RGB - B 通道 (Blue)":
         b_ch = img_rgb[:, :, 2]
         display_img = np.stack([zeros, zeros, b_ch], axis=-1) if rgb_tint else b_ch
         hist_data = b_ch
         hist_color = "#3498db"
+        chart_title = "RGB - Blue Channel (B)"
     elif view_mode == "YUV - Y 亮度分量 (Luminance)":
         display_img = y_ch
         hist_data = y_ch
         hist_color = "#34495e"
+        chart_title = "YUV - Luminance (Y)"
     elif view_mode == "YUV - U 色度分量 (Chrominance U)":
         display_img = u_ch
         hist_data = u_ch
         hist_color = "#2980b9"
+        chart_title = "YUV - Chrominance (U)"
     else:
         display_img = v_ch
         hist_data = v_ch
         hist_color = "#8e44ad"
+        chart_title = "YUV - Chrominance (V)"
 
     v_col1, v_col2 = st.columns(2)
     with v_col1:
         st.image(display_img, caption=f"目前檢視：{view_mode}", use_container_width=True, clamp=True)
     with v_col2:
-        fig_hist = plot_histogram(hist_data, view_mode, color=hist_color)
+        fig_hist = plot_histogram(hist_data, chart_title, color=hist_color)
         st.pyplot(fig_hist)
         plt.close(fig_hist)
 
